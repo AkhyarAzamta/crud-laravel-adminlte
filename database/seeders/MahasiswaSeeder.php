@@ -30,13 +30,40 @@ class MahasiswaSeeder extends Seeder
         ]);
         
         Mahasiswa::create([
-            'nama' => 'Akhyar A',
+            'nama' => 'Azamta A',
             'jenkel' => 'Pria',
-            'alamat' => 'Jl. Mana Aja No. 2',
+            'alamat' => 'Jl. Terus weh No. 3',
             'hp' => '08123456788',
-            'jurusan' => 'Teknik Elektronika',
-            'email' => 'Akhyar@mail.com',
+            'jurusan' => 'Teknik Industri',
+            'email' => 'Azam@mail.com',
             'nidn_dosen' => 3,
+        ]);
+        Mahasiswa::create([
+            'nama' => 'Fiersa Besari',
+            'jenkel' => 'Pria',
+            'alamat' => 'Jl. Tapi Ga Jadian No. 4',
+            'hp' => '08123456788',
+            'jurusan' => 'Teknik Musik',
+            'email' => 'Bung@mail.com',
+            'nidn_dosen' => 4,
+        ]);
+        Mahasiswa::create([
+            'nama' => 'Lancelot',
+            'jenkel' => 'Pria',
+            'alamat' => 'Jl. Core No. 5',
+            'hp' => '08123456788',
+            'jurusan' => 'Teknik Farming',
+            'email' => 'Pance@mail.com',
+            'nidn_dosen' => 1,
+        ]);
+        Mahasiswa::create([
+            'nama' => 'Benedetta',
+            'jenkel' => 'Wanita',
+            'alamat' => 'Jl. Exp No. 6',
+            'hp' => '08123456788',
+            'jurusan' => 'Teknik Rotasi',
+            'email' => 'Benet@mail.com',
+            'nidn_dosen' => 2,
         ]);
     }
 }

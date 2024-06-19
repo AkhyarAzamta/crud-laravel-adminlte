@@ -5,7 +5,7 @@
 <div class="content">
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">Data Mahasiswa Pintar</h3> &nbsp;
+            <h3 class="card-title">Data Mahasiswa</h3> &nbsp;
             <a href="{{url('/downloadpdf')}}" target="_blank" class="btn btn-info btn_md">Download PDF</a>
             <div class="card-tools">
                 <form action="/mahasiswa/search" class="form-inline" method="GET">

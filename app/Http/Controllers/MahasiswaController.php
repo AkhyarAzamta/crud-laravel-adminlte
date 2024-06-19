@@ -19,12 +19,13 @@ class MahasiswaController extends Controller
         return view ('admin.mahasiswa.index',['mahasiswa'=>$mahasiswa]); 
     }
 
-    public function downloadpdf(){
-        $mahasiswa = Mahasiswa::all();
-        $pdf = PDF::loadview('admin.mahasiswa.index',['mahasiswa'=>$mahasiswa])->setOptions(['defaultFont' => 'sans-serif']);
-        return $pdf->download('laporan_mhs.pdf');
-        
-    }
+    public function downloadpdf()
+{
+    $mahasiswa = Mahasiswa::all();
+    $pdf = PDF::loadview('admin.mahasiswa.pdf', ['mahasiswa' => $mahasiswa])->setOptions(['defaultFont' => 'sans-serif']);
+    return $pdf->download('laporan_mhs.pdf');
+}
+
 
     public function create()
     {
