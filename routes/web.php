@@ -39,7 +39,7 @@ Route::get('/mahasiswa/{id}/edit', [MahasiswaController::class, 'edit']);
 Route::put('/mahasiswa/{id}/update', [MahasiswaController::class, 'update']); // Using PUT method for updating
 Route::delete('/mahasiswa/{id}/delete', [MahasiswaController::class, 'destroy']); // Using DELETE method for deleting
 
-Route::get('/mahasiswa/search', [MahasiswaController::class, 'search']);
+Route::get('/mahasiswa/search', [MahasiswaController::class, 'search'])->name('mahasiswa.search');
 
 Route::get('/mahasiswa/dosen', [MahasiswaController::class, 'dosen']);
 Route::get('/mahasiswa/matkul', [MahasiswaController::class, 'matkul']);

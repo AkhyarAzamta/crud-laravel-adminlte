@@ -47,6 +47,16 @@
             placeholder="Masukkan Email anda" value="{{$mahasiswa->email}}">
         </div>
       </div>
+
+      <div class="form-group">
+    <label for="nidn_dosen">Pilih Dosen</label>
+    <select name="nidn_dosen" id="nidn_dosen" class="form-control">
+        <option value="" selected>Pilih Dosen</option>
+        @foreach ($dosen as $d)
+            <option value="{{ $d->id }}">{{ $d->nama_dosen }}</option>
+        @endforeach
+    </select>
+</div>
       <!-- /.card-body -->
 
       <div class="card-footer">

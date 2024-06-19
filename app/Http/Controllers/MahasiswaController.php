@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Dosen;
+use App\Models\Matkul;
 use Illuminate\Http\Request;
 use App\Models\Mahasiswa;
 use PDF;
@@ -27,47 +28,41 @@ class MahasiswaController extends Controller
 
     public function create()
     {
-        return view('admin.mahasiswa.create');
+        $dosen = Dosen::all(); // Mengambil semua data dosen dari tabel dosen
+
+        return view('admin.mahasiswa.create', compact('dosen')); // Mengirimkan data dosen ke view
     }
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-{
-    $this->validate($request,[
-        'nama'      => 'required',
-        'jenkel'    => 'required',
-        'alamat'    => 'required',
-        'hp'        => 'required',
-        'jurusan'   => 'required',
-        'email'     => 'required'
-    ]);
-
-    $mahasiswa = Mahasiswa::create([
-        'nama'      => $request->nama,
-        'jenkel'    => $request->jenkel,
-        'alamat'    => $request->alamat,
-        'hp'        => $request->hp,
-        'jurusan'   => $request->jurusan,
-        'email'     => $request->email
-    ]);
-
-    if($request->hasFile('foto')){
-        $request->file('foto')->move('images/', $request->file('foto')->getClientOriginalName());
-        $mahasiswa->foto = $request->file('foto')->getClientOriginalName();
-        $mahasiswa->save();
+    {
+        $this->validate($request, [
+            'nama'      => 'required',
+            'jenkel'    => 'required',
+            'alamat'    => 'required',
+            'hp'        => 'required',
+            'jurusan'   => 'required',
+            'email'     => 'required',
+            'nidn_dosen'=> 'nullable|exists:dosen,nidn'
+        ]);
+    
+        $mahasiswa = Mahasiswa::create([
+            'nama'      => $request->nama,
+            'jenkel'    => $request->jenkel,
+            'alamat'    => $request->alamat,
+            'hp'        => $request->hp,
+            'jurusan'   => $request->jurusan,
+            'email'     => $request->email,
+            'nidn_dosen'=> $request->nidn_dosen
+        ]);
+    
+        // Proses menyimpan foto dan no_ktp jika ada
+    
+        return redirect('/mahasiswa');
     }
-
-    if($request->hasFile('no_ktp')){
-        $request->file('no_ktp')->move('images/', $request->file('no_ktp')->getClientOriginalName());
-        $mahasiswa->no_ktp = $request->file('no_ktp')->getClientOriginalName();
-        $mahasiswa->save();
-    }
-
-    return redirect('/mahasiswa');
-}
-
+    
 
     /**
      * Display the specified resource.
@@ -83,7 +78,12 @@ class MahasiswaController extends Controller
     public function edit(string $id)
     {
         $mahasiswa = Mahasiswa::find($id);
-        return view('admin.mahasiswa.edit',['mahasiswa' => $mahasiswa]);
+        $dosen = Dosen::all(); // Ambil semua data dosen dari database
+    
+        return view('admin.mahasiswa.edit', [
+            'mahasiswa' => $mahasiswa,
+            'dosen' => $dosen, // Melewatkan data dosen ke view
+        ]);
     }
 
     /**
@@ -91,21 +91,35 @@ class MahasiswaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request,[
+        $this->validate($request, [
             'nama'      => 'required',
             'jenkel'    => 'required',
             'alamat'    => 'required',
             'hp'        => 'required',
             'jurusan'   => 'required',
-            'email'     => 'required'
+            'email'     => 'required',
+            'nidn_dosen'=> 'nullable|exists:dosen,id' // Validasi bahwa nidn_dosen merupakan id yang valid dari tabel dosen
         ]);
-
+    
         $mahasiswa = Mahasiswa::find($id);
-        $mahasiswa->update($request->all());
-
+    
+        if (!$mahasiswa) {
+            return redirect('/mahasiswa')->with('error', 'Mahasiswa not found.');
+        }
+    
+        $mahasiswa->nama = $request->nama;
+        $mahasiswa->jenkel = $request->jenkel;
+        $mahasiswa->alamat = $request->alamat;
+        $mahasiswa->hp = $request->hp;
+        $mahasiswa->jurusan = $request->jurusan;
+        $mahasiswa->email = $request->email;
+        $mahasiswa->nidn_dosen = $request->nidn_dosen; // Update nidn_dosen
+    
         $mahasiswa->save();
-        return redirect('/mahasiswa');
+    
+        return redirect('/mahasiswa')->with('success', 'Mahasiswa updated successfully.');
     }
+    
 
     /**
      * Remove the specified resource from storage.
@@ -133,9 +147,14 @@ class MahasiswaController extends Controller
        return view('admin.mahasiswa.dosen',['dosen' => $dosen]);
     }
 
-    public function matkul(){
-
-        $mahasiswa = Mahasiswa::get();
-        return view('admin.mahasiswa.matkul',['mahasiswa' => $mahasiswa]);
+    public function matkul()
+    {
+        $mahasiswa = Mahasiswa::all(); // Ambil semua data mahasiswa
+        foreach ($mahasiswa as $mhs) {
+            $mhs->matkuls = Matkul::where('mahasiswa_id', $mhs->id)->get();
+        }
+    
+        return view('admin.matkul.show', compact('mahasiswa'));
     }
+    
 }

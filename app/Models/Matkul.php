@@ -8,10 +8,24 @@ use Illuminate\Database\Eloquent\Model;
 class Matkul extends Model
 {
     use HasFactory;
-    protected $table = 'matkul';
-    protected $fillable = ['kode_matkul', 'nama_matkul', 'semester', 'dosen'];
 
-    public function mahasiswa() {
-        return $this->belongsToMany('App\Models\Mahasiswa')->withPivot(['nilai']);
-}
+    protected $table = 'matkul';
+
+    protected $fillable = [
+        'mahasiswa_id',
+        'nama_matkul',
+        'dosen_id',
+        'semester',
+        'nilai',
+    ];
+
+    public function mahasiswa()
+    {
+        return $this->belongsTo(Mahasiswa::class, 'mahasiswa_id', 'id');
+    }
+
+    public function dosen()
+    {
+        return $this->belongsTo(Dosen::class, 'dosen_id', 'id');
+    }
 }

@@ -45,6 +45,17 @@
             <input type="email" class="form-control" id="exampleInputEmail1" name="email" placeholder="Masukkan Email anda">
         </div>
 
+        <div class="form-group">
+    <label for="nidn_dosen">Pilih Dosen</label>
+    <select name="nidn_dosen" id="nidn_dosen" class="form-control">
+        <option value="" selected>Pilih Dosen</option>
+        @foreach ($dosen as $d)
+            <option value="{{ $d->id }}">{{ $d->nama_dosen }}</option>
+        @endforeach
+    </select>
+</div>
+
+
         <div class="card card-danger">
             <div class="card-header">
                 <div class="card-title">Upload Dokumen</div>
