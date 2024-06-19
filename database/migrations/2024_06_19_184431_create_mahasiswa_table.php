@@ -1,0 +1,38 @@
+<?php
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('mahasiswa', function (Blueprint $table) {
+            $table->id();
+            $table->string('nama');
+            $table->string('jenkel');
+            $table->string('alamat');
+            $table->string('hp');
+            $table->string('jurusan');
+            $table->string('email');
+            $table->unsignedBigInteger('nidn_dosen')->nullable(); // Tambahkan kolom nidn_dosen
+
+            $table->foreign('nidn_dosen')
+                  ->references('id')->on('dosen')
+                  ->onDelete('set null'); // Definisikan foreign key ke tabel dosen
+                  
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('mahasiswa');
+    }
+};
