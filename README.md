@@ -42,7 +42,7 @@ Install or Update Composer
 
 ## Demo
 
-[YouTube]([https://github.com/akhyarazamta](https://youtu.be/egHYJZuABcA))
+[YouTube](https://youtu.be/egHYJZuABcA)
 
 
 ![Login](./public/readmemd/login.png)
