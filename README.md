@@ -19,6 +19,14 @@ Install or Update Composer
   composer update
   ```
   #### Don't forget to Setup Environment Variables (.env)
+  ```bash
+  cp .env.example .env
+  ```
+#### Create Database
+```bash
+  sudo mysql -u <username> -p
+  Enter password: <enter your password>
+  ```
   Migrate to Database
   ```bash
   php artisan migrate --seed
